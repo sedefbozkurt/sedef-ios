@@ -80,11 +80,12 @@
 				};
 			};
 			buildConfigurationList = C0D93293307B7DA20049E941 /* Build configuration list for PBXProject "ExpenseTracker" */;
-			developmentRegion = en;
+			developmentRegion = tr;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				tr,
 			);
 			mainGroup = C0D9328F307B7DA20049E941;
 			minimizedProjectReferenceProxies = 1;
