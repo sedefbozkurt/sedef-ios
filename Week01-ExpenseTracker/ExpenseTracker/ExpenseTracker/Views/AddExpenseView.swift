@@ -13,6 +13,11 @@ struct AddExpenseView: View {
     @State private var category: Category = .food
     @State private var date: Date = .now
     
+    private var isValid: Bool {
+        !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            && (amount ?? 0) > 0
+    }
+    
     var body: some View {
         NavigationStack {
             Form {
