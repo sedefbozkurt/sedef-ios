@@ -13,6 +13,10 @@ struct AddExpenseView: View {
     @State private var category: Category = .food
     @State private var date: Date = .now
     
+    @Environment(\.dismiss) private var dismiss
+    
+    let onSave: (Expense) -> Void
+    
     private var isValid: Bool {
         !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
             && (amount ?? 0) > 0
@@ -41,10 +45,40 @@ struct AddExpenseView: View {
             }
             .navigationTitle("Yeni Harcama")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("İptal") {
+                        dismiss()
+                    }
+                }
+                
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Kaydet") {
+                        guard let amount, amount > 0 else {
+                            return
+                        }
+                        
+                        let trimmedTitle = title.trimmingCharacters(
+                            in: .whitespacesAndNewlines
+                        )
+                        
+                        let expense = Expense(
+                            title: trimmedTitle,
+                            amount: amount,
+                            category: category,
+                            date: date
+                        )
+                        
+                        onSave(expense)
+                        dismiss()
+                    }
+                    .disabled(!isValid)
+                }
+            }
         }
     }
 }
 
 #Preview {
-    AddExpenseView()
+    AddExpenseView { _ in }
 }

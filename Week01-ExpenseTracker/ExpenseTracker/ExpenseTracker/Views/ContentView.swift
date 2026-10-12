@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var isShowingAddSheet = false
     @State private var expenses: [Expense] = [
         Expense(
             title: "Market alışverişi",
@@ -41,6 +42,20 @@ struct ContentView: View {
                 ExpenseRow(expense: expense)
             }
             .navigationTitle("Harcamalar")
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        isShowingAddSheet = true
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                }
+            }
+            .sheet(isPresented: $isShowingAddSheet) {
+                AddExpenseView { newExpense in
+                    expenses.append(newExpense)
+                }
+            }
         }
     }
 }
