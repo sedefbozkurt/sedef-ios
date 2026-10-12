@@ -12,7 +12,7 @@ struct ExpenseRow: View {
     
     var body: some View {
         HStack(spacing: 12) {
-            VStack(alignment: .leading, spacing: 3) {
+            VStack(alignment: .leading, spacing: 5) {
                 Text(expense.title)
                     .font(.headline)
                 
@@ -50,7 +50,7 @@ struct ExpenseRow: View {
             title: "Market alışverişi",
             amount: 450.75,
             category: .food,
-            date: .now
+            date: Date.from(year: 2026, month: 10, day: 11)
         )
     )
 }
