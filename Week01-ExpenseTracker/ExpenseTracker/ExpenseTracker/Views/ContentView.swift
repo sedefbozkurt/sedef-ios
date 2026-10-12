@@ -13,25 +13,25 @@ struct ContentView: View {
             title: "Market alışverişi",
             amount: 450.75,
             category: .food,
-            date: .now
+            date: Date.from(year: 2026, month: 10, day: 11)
         ),
         Expense(
             title: "Otobüs bileti",
             amount: 55,
             category: .transport,
-            date: .now.addingTimeInterval(-86_400)
+            date: Date.from(year: 2026, month: 10, day: 10)
         ),
         Expense(
             title: "Elektrik faturası",
             amount: 620.50,
             category: .bills,
-            date: .now.addingTimeInterval(-172_800)
+            date: Date.from(year: 2026, month: 10, day: 9)
         ),
         Expense(
             title: "Makyaj malzemeleri",
             amount: 1989.74,
             category: .other,
-            date: .now.addingTimeInterval(-365_200)
+            date: Date.from(year: 2026, month: 10, day: 5)
         )
     ]
     

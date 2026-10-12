@@ -13,9 +13,9 @@ enum Category: String, CaseIterable, Codable, Identifiable {
     case bills
     case other
     
-    var id: Self {self}
+    var id: Self { self }
     
-    var title: String{
+    var title: String {
         switch self {
         case .food:
             "Yeme & İçme"
