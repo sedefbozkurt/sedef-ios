@@ -40,12 +40,41 @@ struct ContentView: View {
         expenses.sorted { $0.date > $1.date }
     }
     
+    private var totalAmount: Decimal {
+        expenses.reduce(Decimal.zero) { total, expense in
+            total + expense.amount
+        }
+    }
+    
     var body: some View {
         NavigationStack {
             List(sortedExpenses) { expense in
                 ExpenseRow(expense: expense)
             }
             .navigationTitle("Harcamalar")
+            .safeAreaInset(edge: .top, spacing: 0) {
+                HStack {
+                    Text("Toplam Harcama")
+                        .font(.headline)
+                    
+                    Spacer()
+                    
+                    Text(totalAmount, format: .currency(code: "TRY"))
+                        .font(.headline)
+                        .fontWeight(.semibold)
+                }
+                .padding()
+                .background(Color(.secondarySystemGroupedBackground),
+                            in: RoundedRectangle(cornerRadius: 17)
+                )
+                .padding(.horizontal)
+                .padding(.vertical)
+                .background(
+                    Color(.systemGroupedBackground),
+                    ignoresSafeAreaEdges: []
+                )
+                
+            }
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button {
