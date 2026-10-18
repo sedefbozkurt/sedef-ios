@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct TotalSummaryView: View {
+    let title: String
     let total: Decimal
     
     var body: some View {
         HStack {
-            Text("Toplam Harcama")
+            Text(title)
                 .font(.headline)
             
             Spacer()
@@ -24,7 +25,7 @@ struct TotalSummaryView: View {
         .padding()
         .background(Color(.secondarySystemGroupedBackground),
                     in: RoundedRectangle(cornerRadius: 17)
-                    )
+        )
         .padding()
         .background(
             Color(.systemGroupedBackground),
@@ -34,5 +35,5 @@ struct TotalSummaryView: View {
 }
 
 #Preview {
-    TotalSummaryView(total: 1500)
+    TotalSummaryView(title: "Toplam Harcama", total: 1500)
 }

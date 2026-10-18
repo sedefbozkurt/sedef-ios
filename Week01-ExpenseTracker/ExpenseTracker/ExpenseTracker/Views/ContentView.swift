@@ -41,12 +41,6 @@ struct ContentView: View {
         expenses.sorted { $0.date > $1.date }
     }
     
-    private var totalAmount: Decimal {
-        expenses.reduce(Decimal.zero) { total, expense in
-            total + expense.amount
-        }
-    }
-    
     private var filteredExpenses: [Expense] {
         guard let selectedCategory else {
             return sortedExpenses
@@ -57,6 +51,20 @@ struct ContentView: View {
         }
     }
     
+    private var totalAmount: Decimal {
+        filteredExpenses.reduce(Decimal.zero) { total, expense in
+            total + expense.amount
+        }
+    }
+    
+    private var summaryTitle: String {
+        guard let selectedCategory else {
+            return "Toplam Harcama"
+        }
+        
+        return "\(selectedCategory.title) Toplamı"
+    }
+    
     var body: some View {
         NavigationStack {
             List(filteredExpenses) { expense in
@@ -64,7 +72,10 @@ struct ContentView: View {
             }
             .navigationTitle("Harcamalar")
             .safeAreaInset(edge: .top, spacing: 0) {
-                TotalSummaryView(total: totalAmount)
+                TotalSummaryView(
+                    title: summaryTitle,
+                    total: totalAmount
+                )
             }
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
