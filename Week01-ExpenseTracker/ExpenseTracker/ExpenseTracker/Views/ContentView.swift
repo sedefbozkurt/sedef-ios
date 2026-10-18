@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var isShowingAddSheet = false
+    @State private var selectedCategory: Category? = nil
     @State private var expenses: [Expense] = [
         Expense(
             title: "Market alışverişi",
@@ -46,9 +47,19 @@ struct ContentView: View {
         }
     }
     
+    private var filteredExpenses: [Expense] {
+        guard let selectedCategory else {
+            return sortedExpenses
+        }
+        
+        return sortedExpenses.filter {
+            $0.category == selectedCategory
+        }
+    }
+    
     var body: some View {
         NavigationStack {
-            List(sortedExpenses) { expense in
+            List(filteredExpenses) { expense in
                 ExpenseRow(expense: expense)
             }
             .navigationTitle("Harcamalar")
@@ -61,6 +72,25 @@ struct ContentView: View {
                         isShowingAddSheet = true
                     } label: {
                         Image(systemName: "plus")
+                    }
+                }
+                
+                ToolbarItem(placement: .topBarLeading) {
+                    Menu {
+                        Picker("Kategori", selection: $selectedCategory) {
+                            Text("Tümü")
+                                .tag(nil as Category?)
+                            
+                            ForEach(Category.allCases) { option in
+                                Text(option.title)
+                                    .tag(option as Category?)
+                            }
+                        }
+                    } label: {
+                        Label(
+                            selectedCategory?.title ?? "Tümü",
+                            systemImage: "line.3.horizontal.decrease.circle"
+                        )
                     }
                 }
             }
