@@ -36,9 +36,13 @@ struct ContentView: View {
         )
     ]
     
+    private var sortedExpenses: [Expense] {
+        expenses.sorted { $0.date > $1.date }
+    }
+    
     var body: some View {
         NavigationStack {
-            List(expenses) { expense in
+            List(sortedExpenses) { expense in
                 ExpenseRow(expense: expense)
             }
             .navigationTitle("Harcamalar")
