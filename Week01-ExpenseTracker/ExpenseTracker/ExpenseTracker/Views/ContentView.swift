@@ -53,27 +53,7 @@ struct ContentView: View {
             }
             .navigationTitle("Harcamalar")
             .safeAreaInset(edge: .top, spacing: 0) {
-                HStack {
-                    Text("Toplam Harcama")
-                        .font(.headline)
-                    
-                    Spacer()
-                    
-                    Text(totalAmount, format: .currency(code: "TRY"))
-                        .font(.headline)
-                        .fontWeight(.semibold)
-                }
-                .padding()
-                .background(Color(.secondarySystemGroupedBackground),
-                            in: RoundedRectangle(cornerRadius: 17)
-                )
-                .padding(.horizontal)
-                .padding(.vertical)
-                .background(
-                    Color(.systemGroupedBackground),
-                    ignoresSafeAreaEdges: []
-                )
-                
+                TotalSummaryView(total: totalAmount)
             }
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
