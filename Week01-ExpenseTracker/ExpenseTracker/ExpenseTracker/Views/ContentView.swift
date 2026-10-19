@@ -65,23 +65,21 @@ struct ContentView: View {
         return "\(selectedCategory.title) Toplamı"
     }
     
-    private func deleteExpenses(at offsets: IndexSet) {
-        let idsToDelete = offsets.map { index in
-            filteredExpenses[index].id
-        }
-        
-        expenses.removeAll { expense in
-            idsToDelete.contains(expense.id)
-        }
-    }
-    
     var body: some View {
         NavigationStack {
             List {
                 ForEach(filteredExpenses) { expense in
                     ExpenseRow(expense: expense)
+                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                            Button(role: .destructive) {
+                                expenses.removeAll {
+                                    $0.id == expense.id
+                                }
+                            } label: {
+                                Label("Sil", systemImage: "trash")
+                            }
+                        }
                 }
-                .onDelete(perform: deleteExpenses)
             }
             .navigationTitle("Harcamalar")
             .safeAreaInset(edge: .top, spacing: 0) {
