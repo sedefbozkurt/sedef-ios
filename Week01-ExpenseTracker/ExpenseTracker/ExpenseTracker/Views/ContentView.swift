@@ -10,32 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @State private var isShowingAddSheet = false
     @State private var selectedCategory: Category? = nil
-    @State private var expenses: [Expense] = [
-        Expense(
-            title: "Market alışverişi",
-            amount: 450.75,
-            category: .food,
-            date: Date.from(year: 2026, month: 10, day: 11)
-        ),
-        Expense(
-            title: "Otobüs bileti",
-            amount: 55,
-            category: .transport,
-            date: Date.from(year: 2026, month: 10, day: 10)
-        ),
-        Expense(
-            title: "Elektrik faturası",
-            amount: 620.50,
-            category: .bills,
-            date: Date.from(year: 2026, month: 10, day: 9)
-        ),
-        Expense(
-            title: "Makyaj malzemeleri",
-            amount: 1989.74,
-            category: .other,
-            date: Date.from(year: 2026, month: 10, day: 5)
-        )
-    ]
+    @State private var expenses: [Expense] = ExpenseStorage.load()
     
     private var sortedExpenses: [Expense] {
         expenses.sorted { $0.date > $1.date }
@@ -120,6 +95,9 @@ struct ContentView: View {
                 AddExpenseView { newExpense in
                     expenses.append(newExpense)
                 }
+            }
+            .onChange(of: expenses) {
+                ExpenseStorage.save(expenses)
             }
         }
     }
