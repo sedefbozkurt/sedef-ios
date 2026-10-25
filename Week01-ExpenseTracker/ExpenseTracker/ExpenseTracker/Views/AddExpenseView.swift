@@ -17,9 +17,21 @@ struct AddExpenseView: View {
     
     let onSave: (Expense) -> Void
     
+    private var hasValidDecimalPlaces: Bool {
+        guard let amount else { return true }
+        
+        var rounded = Decimal()
+        var source = amount
+        
+        NSDecimalRound(&rounded, &source, 2, .plain)
+        
+        return rounded == amount
+    }
+    
     private var isValid: Bool {
         !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-            && (amount ?? 0) > 0
+        && (amount ?? 0) >= 0.01
+        && hasValidDecimalPlaces
     }
     
     var body: some View {
@@ -29,6 +41,12 @@ struct AddExpenseView: View {
                 
                 TextField("Tutar", value: $amount, format: .number)
                     .keyboardType(.decimalPad)
+                
+                if !hasValidDecimalPlaces {
+                    Text("Tutar en fazla 2 ondalık basamak içerebilir.")
+                        .font(.caption)
+                        .foregroundStyle(.red)
+                }
                 
                 Picker("Kategori", selection: $category) {
                     ForEach(Category.allCases) { option in
