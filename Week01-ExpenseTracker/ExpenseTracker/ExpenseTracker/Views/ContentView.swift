@@ -11,6 +11,7 @@ struct ContentView: View {
     @State private var isShowingAddSheet = false
     @State private var selectedCategory: Category? = nil
     @State private var expenses: [Expense] = ExpenseStorage.load()
+    @State private var showsHiddenBanner = false
     
     private var sortedExpenses: [Expense] {
         expenses.sorted { $0.date > $1.date }
@@ -58,10 +59,38 @@ struct ContentView: View {
             }
             .navigationTitle("Harcamalar")
             .safeAreaInset(edge: .top, spacing: 0) {
-                TotalSummaryView(
-                    title: summaryTitle,
-                    total: totalAmount
-                )
+                VStack(spacing: 7) {
+                    TotalSummaryView(
+                        title: summaryTitle,
+                        total: totalAmount
+                    )
+                    
+                    if showsHiddenBanner {
+                        HStack(spacing: 13) {
+                            Image(systemName: "info.circle")
+                                .foregroundStyle(.secondary)
+                            
+                            Text(
+                                "Harcama kaydedildi, seçili filtre sebebiyle listede görünmüyor."
+                            )
+                            .font(.subheadline)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            Button("Tümünü Göster") {
+                                selectedCategory = nil
+                            }
+                            .font(.subheadline.weight(.medium))
+                        }
+                        .padding()
+                        .background(
+                            .secondary.opacity(0.2),
+                            in: RoundedRectangle(cornerRadius: 13)
+                        )
+                        .padding(.horizontal)
+                        .padding(.bottom, 17)
+                    }
+                }
+                
             }
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
@@ -94,10 +123,18 @@ struct ContentView: View {
             .sheet(isPresented: $isShowingAddSheet) {
                 AddExpenseView { newExpense in
                     expenses.append(newExpense)
+                    
+                    if let selectedCategory,
+                       selectedCategory != newExpense.category {
+                        showsHiddenBanner = true
+                    }
                 }
             }
             .onChange(of: expenses) {
                 ExpenseStorage.save(expenses)
+            }
+            .onChange(of: selectedCategory) {
+                showsHiddenBanner = false
             }
         }
     }
