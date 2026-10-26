@@ -15,6 +15,7 @@ struct ExpenseRow: View {
             VStack(alignment: .leading, spacing: 5) {
                 Text(expense.title)
                     .font(.headline)
+                    .lineLimit(2)
                 
                 Text(expense.category.title)
                     .font(.subheadline)
