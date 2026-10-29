@@ -18,8 +18,9 @@ Every week ends with something concrete: working code, a README or a demo.
 
 | Week | Topic | Status |
 |------|-------|--------|
-| 1 | Level assessment: expense tracker | In progress |
-| 2 | Protocols, generics, value vs reference semantics | Planned |
+
+| 1 | Level assessment: expense tracker | Done |
+| 2 | Protocols: data layer behind ExpenseStore | In progress |
 | 3 | Concurrency: async/await, actors | Planned |
 | 4 | Git workflow, Phase 1 exam | Planned |
 
