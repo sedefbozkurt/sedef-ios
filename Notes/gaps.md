@@ -1,5 +1,7 @@
 # gaps
 
+Hafta 1'de karşıma çıkan konular. Her konunun altında soru ve kısa açıklama var.
+
 ## `guard` 'ın `else` bloğunda neden return yazmak gerekmedi?
 
 Normalde `guard` bloğunun `else` kısmından çıkılması gerekir ancak `return` yazmak tek zorunlu seçenek değildir.
@@ -38,7 +40,9 @@ Swift'in `NSDecimalRound` fonksiyonunda kullanılan bu modlar `Decimal.RoundingM
 
 `hasValidDecimalPlaces` property'sinin amacı, kullanıcının tutarının iki ondalık basamakla temsil edilip edilemeyeceğini kontrol etmek. Tutarı gerçekten yuvarlayıp kaydetmek değil.
 
-##
+## `isValid` varken Kaydet'te neden yine `guard let`?
+
+`isValid`, formdaki bilgilerin geçerli olup olmadığını kontrol ederek Kaydet butonunun etkin olup olmayacağını belirler. `guard let amount, amount > 0` kayıt işlemi sırasında tutarın `nil` olmadığını ve sıfırdan büyük olduğunu kontrol eder; ayrıca `amount` değerini `Decimal?` türünden `Decimal` türüne dönüştürerek güvenle kullanmamızı sağlar.
 
 ## @State ve private
 
